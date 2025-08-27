@@ -39,7 +39,7 @@ void drone_truck(Truck *truck) {
 
   port = SERVER_PORT + truck->id + 1;
   asprintf(&namespace, "%s:%lu:%d", TRUCK, truck->id, port);
-  
+
   print_log(namespace, "Truck has started its execution");
 
   if ((listen_fd = create_server_socket(port)) == -1) {
@@ -71,18 +71,17 @@ void drone_truck(Truck *truck) {
         exit(1);
       }
 
-      if (write(drone_fd, &truck->position, sizeof(truck->position)) == -1) {
+      if (write(drone_fd, &truck->position, sizeof(Position)) == -1) {
         print_error(namespace, "Can't send original position to drone");
         exit(1);
       } // send truck location
 
-      if (write(drone_fd, &truck->targets[i], sizeof(*truck->targets[i])) ==
-          -1) {
+      if (write(drone_fd, truck->targets[i], sizeof(Target)) == -1) {
         print_error(namespace, "Can't send target to drone");
         exit(1);
       } // send target
-      
-      print_log(namespace, "Truck sen't its data to drone");
+
+      print_log(namespace, "Truck sent its data to drone");
 
       close(drone_fd);
     }

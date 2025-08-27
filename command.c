@@ -75,8 +75,8 @@ void command(Target *targets, int *attack_targets, int *camera_targets,
       }
     }
     LIST_FOREACH(drone, &swarm->drone_list, drone_l) {
-      vprint_log(COMMAND, "drone id: %lu drone type: %s", drone->id,
-                 drone->type == ATTACK ? "ATTACK" : "CAMERA");
+      vprint_log(COMMAND, "swarm: %d drone id: %lu drone type: %s", swarm->id,
+                 drone->id, drone->type == ATTACK ? "ATTACK" : "CAMERA");
     }
   }
 

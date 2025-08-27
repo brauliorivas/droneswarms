@@ -11,6 +11,7 @@
 #define DRONE "DRONE"
 
 typedef struct {
+  obj_id_t id;
   int truck_port;
   int server_fd;
   Position position;
@@ -28,14 +29,17 @@ static void *navigation_ctrl(void *targs) {
     exit(1);
   }
 
-  if (read(truck_fd, &drone->position, sizeof(drone->position)) == -1) {
+  if (read(truck_fd, &drone->position, sizeof(Position)) == -1) {
     print_error(drone->namespace, "Can't read position from truck");
     exit(1);
   }
-  if (read(truck_fd, &drone->target, sizeof(drone->target)) == -1) {
+  if (read(truck_fd, &drone->target, sizeof(Target)) == -1) {
     print_error(drone->namespace, "Can't read target");
     exit(1);
   }
+
+  vprint_log(DRONE, "target id: %lu drone id: %lu", drone->target.id,
+             drone->id);
 
   close(truck_fd);
 
@@ -69,6 +73,7 @@ void drone(Drone *drone_data, int truck_port) {
   int i;
 
   drone.truck_port = truck_port;
+  drone.id = drone_data->id;
   asprintf(&drone.namespace, "%s:%lu:%s", DRONE, drone_data->id,
            drone_data->type == ATTACK ? "ATTACK" : "CAMERA");
 
