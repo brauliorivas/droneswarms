@@ -1,4 +1,5 @@
 #include "id.h"
+#include "queue.h"
 #include "target.h"
 
 #ifndef __DRONE_H__
@@ -16,10 +17,13 @@ typedef enum {
   CAMERA,
 } drone_type;
 
-typedef struct {
+typedef struct drone {
   drone_type type;
   obj_id_t id;
+  LIST_ENTRY(drone) drone_l;
 } Drone;
+
+LIST_HEAD(drone_head, drone);
 
 void drone(Drone *drone_data, int conn_fd);
 

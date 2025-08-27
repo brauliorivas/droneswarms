@@ -1,4 +1,5 @@
 #include "physics.h"
+#include "queue.h"
 #include "target.h"
 #include "drone.h"
 #include "truck.h"
@@ -7,10 +8,13 @@
 #ifndef __SWARM_H__
 #define __SWARM_H__
 
-typedef struct {
+typedef struct swarm {
   obj_id_t id;
   Target *target;
-  Drone *drones[DRONES_PER_TRUCK];
+  struct drone_head drone_list;
+  LIST_ENTRY(swarm) swarm_l;
 } Swarm;
+
+LIST_HEAD(swarm_head, swarm);
 
 #endif
