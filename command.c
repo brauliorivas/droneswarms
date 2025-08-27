@@ -62,23 +62,18 @@ void command(Target *targets, int *attack_targets, int *camera_targets,
       LIST_INSERT_HEAD(&swarm->drone_list, drone, drone_l);
       drone->type = CAMERA;
     }
-    // k = 0;
     for (j = 0; j < N_CAMERA_DRONES * ntargets; j++) {
       if (camera_targets[j] % ntargets == i) {
         drone->id = (j + 1) * DRONES_PER_TRUCK - 1;
         drone = drone->drone_l.le_next;
       }
     }
-    // LIST_FOREACH(drone, &swarm->drone_list, drone_l) {}
-    // swarm.drones[k]->id = (j + 1) * DRONES_PER_TRUCK - 1;
     for (j = 0; j < N_ATTACK_DRONES * ntargets; j++) {
       if (attack_targets[j] % ntargets == i) {
         drone->id = j + (j / N_ATTACK_DRONES);
         drone = drone->drone_l.le_next;
       }
     }
-    // k++;
-    // swarm.drones[k]->id = j + (j / N_ATTACK_DRONES);
     LIST_FOREACH(drone, &swarm->drone_list, drone_l) {
       vprint_log(COMMAND, "drone id: %lu drone type: %s", drone->id,
                  drone->type == ATTACK ? "ATTACK" : "CAMERA");
