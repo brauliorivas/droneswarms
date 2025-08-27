@@ -1,5 +1,5 @@
 CC := gcc
-CFLAGS := -Wall
+CFLAGS := -Wall -Wextra
 NAME := droneswarms
 TARGET := $(NAME)
 HEADER_FILES := $(wildcard *.h)
@@ -16,6 +16,15 @@ $(TARGET): $(OBJ_FILES)
 
 debug: CFLAGS += -g
 debug: $(TARGET)
+
+verbose: CFLAGS += -DERR_VERBOSE -DLOG_VERBOSE -g
+verbose: $(TARGET)
+
+err: CFLAGS += -DERR_VERBOSE -g
+err: $(TARGET)
+
+log: CFLAGS += -DLOG_VERBOSE -g
+log: $(TARGET)
 
 clean:
 	rm -f $(OBJ_FILES) $(TARGET) 

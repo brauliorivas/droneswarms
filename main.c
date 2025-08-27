@@ -68,9 +68,9 @@ int main(int argc, char *argv[]) {
   val target_step = MAX_X / ntargets;
   Range target_location = {MIN_X, MIN_X + target_step - 1};
   for (i = 0; i < ntargets; i++) {
+    targets[i].id = i;
     targets[i].pos.y = MAX_Y;
     targets[i].pos.x = random_value(&target_location);
-    targets[i].id = i;
     target_location.x1 = target_location.x2 + 1;
     target_location.x2 = target_location.x2 + target_step;
   }
@@ -79,7 +79,6 @@ int main(int argc, char *argv[]) {
   int *attack_targets = malloc(n_attack_drones * sizeof(*attack_targets));
   for (i = 0; i < n_attack_drones; i++) {
     attack_targets[i] = i;
-    printf("drone id: %d\n", attack_targets[i]);
   }
   shuffle(attack_targets, n_attack_drones);
 
@@ -87,7 +86,6 @@ int main(int argc, char *argv[]) {
   int *camera_targets = malloc(n_camera_drones * sizeof(*camera_targets));
   for (i = 0; i < n_camera_drones; i++) {
     camera_targets[i] = i;
-    printf("drone id: %d\n", camera_targets[i]);
   }
   shuffle(camera_targets, n_camera_drones);
 
@@ -97,7 +95,6 @@ int main(int argc, char *argv[]) {
     print_error(MAIN, "Error forking truck for command");
     exit(1);
   } else if (pid == 0) {
-    print_log(MAIN, "truck has started its execution");
     truck_data = malloc(sizeof(*truck_data));
     truck_data->position.y = MIN_Y;
     truck_data->position.x = random_value(&truck_location);
@@ -115,7 +112,6 @@ int main(int argc, char *argv[]) {
       print_error(MAIN, "Error forking truck");
       exit(1);
     } else if (pid == 0) {
-      print_log(MAIN, "truck has started its execution");
       truck_data = malloc(sizeof(*truck_data));
       truck_data->position.y = MIN_Y;
       truck_data->position.x = random_value(&truck_location);
