@@ -10,6 +10,9 @@
 #define print_error(namespace, msg)                                            \
   do {                                                                         \
   } while (0)
+#define vprint_error(namespace, fmt, ...)                                      \
+  do {                                                                         \
+  } while (0)
 #endif
 
 #ifdef LOG_VERBOSE
@@ -19,6 +22,9 @@
   fprintf(stdout, "[%s] " fmt "\n", namespace, ##__VA_ARGS__)
 #else
 #define print_log(namespace, msg)                                              \
+  do {                                                                         \
+  } while (0)
+#define vprint_log(namespace, fmt, ...)                                        \
   do {                                                                         \
   } while (0)
 #endif
