@@ -21,13 +21,34 @@ typedef struct {
 
 static void *attend_drone(void *targs) {
   Command *command_data;
-  int *drone_fd;
+  Message message;
+  int drone_fd;
 
   command_data = targs;
-  drone_fd = command_data->drone_fd;
+  drone_fd = *command_data->drone_fd;
 
-  close(*drone_fd);
-  free(drone_fd);
+  message = build_message(START_FLY);
+  if (write(drone_fd, &message, sizeof(message)) == -1) {
+  }
+
+  while (1) {
+    // check link 
+  }
+
+  message = build_message(ENSEMBLE_COMPLETE);
+  if (write(drone_fd, &message, sizeof(message)) == -1) {
+  }
+
+  while (1) {
+  
+  }
+
+  message = build_message(CHANGE_TARGET);
+  if (write(drone_fd, &message, sizeof(message)) == -1) {
+  }
+
+  close(drone_fd);
+  free(command_data->drone_fd);
   free(command_data);
   return NULL;
 }

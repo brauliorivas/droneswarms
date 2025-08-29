@@ -6,6 +6,7 @@
 #include "random.h"
 #include "swarm.h"
 #include "truck.h"
+#include <assert.h>
 #include <fcntl.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -19,7 +20,28 @@
 #define DEFENSES 2
 #define MAIN "MAIN"
 
+#define NZONES 3
+
+Stripe ensemble_zone = {.type = HORIZONTAL,
+                        .range = {
+                            .x1 = MIN_Y + DELTA,
+                            .x2 = MAX_Y / 3 - DELTA,
+                        }};
+
+Stripe defense_zone = {.type = HORIZONTAL,
+                             .range = {
+                                 .x1 = MAX_Y / 3 + DELTA,
+                                 .x2 = 2 * MAX_Y / 3 - DELTA,
+                             }};
+
+Stripe resemble_zone = {.type = HORIZONTAL,
+                              .range = {
+                                  .x1 = 2 * MAX_Y / 3 + DELTA,
+                                  .x2 = MAX_Y - DELTA,
+                              }};
+
 int main(int argc, char *argv[]) {
+  assert(MAX_Y / 3 > 2 * DELTA);
   char *message;
   if (argc != 2) {
     asprintf(&message, "Run: %s <path/to/constants/file>", argv[0]);

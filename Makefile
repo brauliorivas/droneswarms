@@ -1,5 +1,6 @@
 CC := gcc
 CFLAGS := -Wall -Wextra
+LIBS := -lm
 NAME := droneswarms
 TARGET := $(NAME)
 HEADER_FILES := $(wildcard *.h)
@@ -9,7 +10,7 @@ OBJ_FILES := $(SRC_FILES:.c=.o)
 
 
 $(TARGET): $(OBJ_FILES)
-	$(CC) $(CFLAGS) -o $@ $(OBJ_FILES)
+	$(CC) $(CFLAGS) -o $@ $(OBJ_FILES) $(LIBS)
 
 %.o: %.c $(HEADER_FILES)
 	$(CC) $(CFLAGS) -c $< -o $@
